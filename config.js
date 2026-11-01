@@ -3,7 +3,7 @@
 
 Lemmata.site = {
   title:   "Lemmata",
-  tagline: "Expository notes, worked problems and reading notes in algebra and analysis.",
+  tagline: "Expository notes, worked problems, personal notes and many more.",
   author:  "Basu Dev Karki",
   email:   "",    // optional, like "you@example.com"; adds a Contact line to the About page
   farewell: "Have a great day!"   // optional: a last line at the foot of every page
@@ -29,7 +29,8 @@ Lemmata.links = [
 // the text of the About page: HTML between backticks (maths works here too).
 // ${Lemmata.site.author} is replaced by the author name above; no other backticks inside, please.
 Lemmata.about = `
-<p>I am ${Lemmata.site.author}, an undergraduate student of mathematics. This blog collects expository notes, worked problems and reading notes, mostly in algebra and analysis, written as I try to move from olympiad-style problem solving towards research-level mathematics.</p>
+<p>I am ${Lemmata.site.author}, an undergraduate student of mathematics. This blog collects expository notes, worked problems and my personal
+thoughts many different topics.</p>
 <p>Everything is typeset in LaTeX and rendered with MathJax. Errors are likely in notes of this kind; corrections are welcome.</p>`;
 
 // the Math page: notes and problem sets that live as PDFs (here, on GitHub).
