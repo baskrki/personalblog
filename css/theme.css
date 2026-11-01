@@ -1,0 +1,109 @@
+/* theme.css - the look of the site: colours, fonts and the base page style.
+   The site is always light, whatever the device's dark/light setting says.
+   Change a value here and it changes everywhere. */
+
+/* Fonts live in the fonts/ folder (both are open-licence; see the OFL files there).
+   Source Serif 4 is one variable file: its weight and "optical size" adjust by themselves,
+   so small text is sturdier and big headings are finer. */
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("../fonts/source-serif-4.woff2") format("woff2");
+  font-weight: 400 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Source Serif 4";
+  src: url("../fonts/source-serif-4-italic.woff2") format("woff2");
+  font-weight: 400 700; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Hanken Grotesk";
+  src: url("../fonts/hanken-grotesk.woff2") format("woff2");
+  font-weight: 400 700; font-style: normal; font-display: swap;
+}
+
+:root {
+  /* surfaces */
+  --bg:    #ffffff;   /* page background */
+  --paper: #ffffff;   /* the search box */
+  --tint:  #f2f5fa;   /* theorem boxes, code blocks, hover */
+  --deep:  #0b2447;   /* the figure on the home page and the footer */
+
+  /* text and lines */
+  --ink:   #0f1a33;   /* main text and headings */
+  --soft:  #2e3955;   /* a little lighter than the main text: excerpts, remarks, quotations */
+  --mute:  #56617a;   /* secondary text: dates, labels, captions */
+  --rule:  #dce2ec;   /* thin dividing lines */
+  --field: #8a94a8;   /* the outline of the search box (dark enough to be seen clearly) */
+  --edge:  #b7c0d2;   /* the thin bar beside a remark */
+
+  /* accents */
+  --link:  #1b52b8;   /* links and the keyboard focus ring */
+  --bar:   #1f4aa8;   /* theorem edge and label, topic links */
+  --gold:  #e8a92b;   /* the square in the title, the symbol π in the figure */
+  --brass: #a8730a;   /* the end-of-proof square: a gold dark enough to read on white */
+  --defn:  #137a6b;   /* the edge of a definition box */
+
+  /* the yellow box shown only when a post file has a problem */
+  --warn-bg:   #fff6dc;
+  --warn-line: #c99a1c;
+
+  /* the PDF viewer on the Math page: dark, like the PDF reader built into a browser (see css/pdf.css) */
+  --pdf-bar:   #3e3e3e;   /* its toolbar and side list */
+  --pdf-bg:    #2c2c2c;   /* the dark area behind the pages */
+  --pdf-ink:   #f1f1f1;   /* toolbar icons and text */
+  --pdf-field: #1f1f1f;   /* the page-number box */
+  --pdf-tag:   #a22437;   /* the red "PDF" label on the file card */
+
+  /* fonts */
+  --serif: "Source Serif 4", Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, "Times New Roman", serif;
+  --sans:  "Hanken Grotesk", system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* page grid: a note's details sit in the left column, its text in the middle one */
+  --gutter: 40px;     /* space at the left and right edge of the screen */
+  --wrap:   1040px;   /* widest the content gets */
+  --col-l:  10rem;    /* left column: date, topics */
+  --col-c:  38rem;    /* middle column: the text (about 70 characters per line) */
+  --col-r:  11rem;    /* right column: topics and archive on list pages */
+  --gap:    2.75rem;
+
+  /* Light only: tells the browser to draw scrollbars, form fields and its
+     own widgets in light colours even when the device is set to dark. */
+  color-scheme: light;
+}
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 18px/1.65 var(--serif);
+  font-kerning: normal;
+  font-variant-numeric: lining-nums;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: #a9bde3;                       /* older browsers */
+  text-decoration-color: color-mix(in srgb, currentColor 38%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: .2em;
+  transition: text-decoration-color .15s;
+}
+a:hover { text-decoration-color: currentColor; text-decoration-thickness: 1.5px; }
+
+/* selected text looks like it was marked with a highlighter */
+::selection { background: #fbe6a4; color: #0f1a33; }
+
+:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; border-radius: 2px; }
+main:focus { outline: none; }
+
+@media (max-width: 1100px) {
+  :root { --gutter: 32px; --col-l: 8.5rem; --gap: 2.25rem; }
+}
+@media (max-width: 860px) {
+  :root { --gutter: 20px; }
+  body { font-size: 17px; }
+}

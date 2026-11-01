@@ -1,0 +1,224 @@
+/* pdf.css - the PDF page of the Math section: the frame around the viewer, the file card, and the viewer itself.
+   Its markup and behaviour are in js/pdfviewer.js. The viewer is dark on purpose, like the PDF reader built into
+   a browser; its colours are the --pdf-… variables in css/theme.css. */
+
+/* ---------- the page around the viewer ---------- */
+.doc .art-head { padding-bottom: 26px; }
+.crumb { margin: 0 0 .9rem; font: 600 .9rem/1.3 var(--sans); }
+.crumb a { text-decoration: none; }
+.crumb a:hover { text-decoration: underline; }
+
+.doc-file { padding-top: 1.7rem; border-top: 1px solid var(--ink); }
+.doc-in { margin-top: 2.4rem; padding-top: 1.7rem; border-top: 1px solid var(--rule); }
+.doc-text { max-width: var(--col-c); }
+.doc-text p { margin: 0 0 1.1em; text-wrap: pretty; }
+.doc-links { display: flex; flex-wrap: wrap; gap: .3rem 1.6rem; margin: 0; font: 600 .92rem/1.5 var(--sans); }
+
+/* "Resource Type: Notes" above the file card */
+.pdf-type { margin: 0 0 .75rem; font: .98rem/1.4 var(--sans); }
+.pdf-type b { margin-right: .35rem; font-weight: 650; }
+.pdf-type span { color: var(--soft); }
+
+/* ---------- the file card: icon with size, the file name, and Download File ---------- */
+.pdf-file {
+  display: flex; align-items: center; gap: 1.1rem;
+  margin-bottom: 14px; padding: 12px 14px;
+  background: var(--bg); border: 1px solid var(--rule); border-radius: 3px;
+}
+.pdf-ico {
+  flex: none; width: 46px; overflow: hidden; text-align: center;
+  background: #ececec; border-radius: 4px;
+  color: var(--ink); font: 500 .66rem/1 var(--sans);
+}
+.pdf-ico b { display: block; padding: 4px 0 3px; background: var(--pdf-tag); color: #fff; font-weight: 600; letter-spacing: .03em; }
+.pdf-ico svg { display: block; width: 15px; height: 15px; margin: 5px auto 1px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pdf-ico span { display: block; padding: 2px 0 5px; font-variant-numeric: tabular-nums; }
+.pdf-ico span:empty { display: none; }
+.pdf-name { flex: 1; min-width: 0; margin: 0; overflow-wrap: anywhere; color: var(--ink); font: 1rem/1.4 var(--sans); }
+.pdf-dl {
+  flex: none; display: inline-flex; align-items: center; justify-content: center;
+  min-height: 46px; padding: 0 2rem;
+  background: var(--link); border-radius: 4px;
+  color: #fff; font: 500 1rem/1 var(--sans); text-decoration: none;
+  transition: background-color .15s;
+}
+.pdf-dl:hover { background: #163f92; text-decoration: none; }
+.pdf-dl:focus-visible { outline-color: var(--ink); }
+
+/* ---------- the viewer: toolbar on top, optional side list on the left, the pages ---------- */
+.pdf-viewer {
+  display: flex; flex-direction: column;
+  height: min(88vh, 1180px); min-height: min(440px, 94vh);        /* never taller than the screen, even on a phone turned sideways */
+  overflow: hidden; border-radius: 3px;
+  background: var(--pdf-bg); color: var(--pdf-ink);
+  font: 500 .9rem/1 var(--sans);
+}
+@supports (height: 100dvh) { .pdf-viewer { height: min(88dvh, 1180px); min-height: min(440px, 94dvh); } }
+.pdf-viewer:fullscreen { height: 100%; border-radius: 0; }
+.pdf-viewer:-webkit-full-screen { height: 100%; border-radius: 0; }
+.pdf-viewer :focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+
+/* toolbar */
+.pdf-bar {
+  position: relative; z-index: 3;
+  flex: none; display: flex; align-items: center; gap: 2px;
+  min-height: 52px; padding: 0 10px;
+  background: var(--pdf-bar); box-shadow: 0 1px 3px rgba(0, 0, 0, .45);
+  overflow-x: auto; scrollbar-width: none;                         /* on a screen too narrow for every button, the bar slides sideways instead of cutting one off */
+}
+.pdf-bar::-webkit-scrollbar { display: none; }
+.pb {
+  flex: none; display: grid; place-items: center;
+  width: 40px; height: 40px; padding: 0;
+  background: transparent; border: 0; border-radius: 50%;
+  color: var(--pdf-ink); cursor: pointer;
+}
+.pb svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.pb:hover:not(:disabled) { background: rgba(255, 255, 255, .14); }
+.pb:active:not(:disabled) { background: rgba(255, 255, 255, .22); }
+.pb[aria-expanded="true"] { background: rgba(255, 255, 255, .18); }
+.pb:disabled { opacity: .38; cursor: default; }
+.pb-page { display: flex; align-items: center; gap: .5rem; margin: 0 .5rem 0 .25rem; font: 500 1rem/1 var(--sans); font-variant-numeric: tabular-nums; }
+.pb-num {
+  width: 3.4em; min-height: 38px; padding: .5em .3em;
+  background: var(--pdf-field); border: 0; border-radius: 3px;
+  color: #fff; font: inherit; text-align: center;
+}
+.pb-num:disabled { opacity: .55; }
+.pb-sep { flex: none; align-self: center; width: 1px; height: 24px; margin: 0 .55rem; background: rgba(255, 255, 255, .3); }
+.pb-zoom { min-width: 3.2em; color: #d9d9d9; font: 500 .88rem/1 var(--sans); font-variant-numeric: tabular-nums; text-align: center; }
+.pb-fill { flex: 1; }
+
+/* below the toolbar */
+.pdf-body { position: relative; flex: 1; min-height: 0; display: flex; }
+
+/* the side list: Contents (the PDF's bookmarks) and Pages (thumbnails) */
+.pdf-side { flex: none; width: 15.5rem; min-height: 0; display: flex; flex-direction: column; background: var(--pdf-bar); border-right: 1px solid rgba(0, 0, 0, .5); }
+.pdf-side[hidden] { display: none; }
+.pdf-seg { flex: none; display: flex; gap: 4px; padding: 8px; border-bottom: 1px solid rgba(255, 255, 255, .1); }
+.pdf-seg button { flex: 1; padding: .6em .4em; background: transparent; border: 1px solid rgba(255, 255, 255, .22); border-radius: 3px; color: var(--pdf-ink); font: 500 .85rem/1 var(--sans); cursor: pointer; }
+.pdf-seg button:hover { background: rgba(255, 255, 255, .08); }
+.pdf-seg button[aria-pressed="true"] { background: rgba(255, 255, 255, .16); border-color: rgba(255, 255, 255, .42); }
+.pdf-seg button[hidden] { display: none; }
+.pdf-panel { position: relative; flex: 1; min-height: 0; overflow: auto; padding: 8px 0; color-scheme: dark; }
+.pdf-panel[hidden] { display: none; }
+.pdf-panel ul { margin: 0; padding: 0; list-style: none; }
+.pdf-row { display: flex; align-items: flex-start; padding-left: calc(var(--d, 0) * 14px + 4px); }
+.pdf-tg { flex: none; display: grid; place-items: center; width: 26px; height: 29px; padding: 0; background: none; border: 0; color: #cfcfcf; cursor: pointer; }
+span.pdf-tg { cursor: default; }
+.pdf-tg svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; transition: transform .15s; }
+.pdf-tg[aria-expanded="true"] svg { transform: rotate(90deg); }
+.pdf-lnk { flex: 1; min-width: 0; padding: 6px 10px 6px 2px; background: none; border: 0; color: var(--pdf-ink); font: 400 .86rem/1.35 var(--sans); text-align: left; overflow-wrap: anywhere; cursor: pointer; }
+.pdf-lnk:hover { text-decoration: underline; }
+.pdf-kids[hidden] { display: none; }
+.pdf-thumb { display: block; margin: 0 auto 10px; padding: 6px 6px 4px; background: none; border: 2px solid transparent; border-radius: 4px; color: var(--pdf-ink); text-align: center; cursor: pointer; }
+.pdf-thumb:hover { background: rgba(255, 255, 255, .08); }
+.pdf-thumb[aria-current="true"] { background: rgba(138, 180, 248, .16); border-color: #8ab4f8; }
+.pdf-th-img { display: block; background: #fff; box-shadow: 0 1px 4px rgba(0, 0, 0, .5); }
+.pdf-th-img canvas { display: block; width: 100%; height: 100%; }
+.pdf-th-n { display: block; margin-top: 5px; font: 500 .78rem/1 var(--sans); font-variant-numeric: tabular-nums; }
+
+/* the pages. The padding is read by the script to fit a page to the width. */
+.pdf-stage { position: relative; flex: 1; min-width: 0; overflow: auto; padding: 16px; background: var(--pdf-bg); color-scheme: dark; }
+.pdf-stage:focus-visible { outline-offset: -3px; }
+.pdf-pages { --scale-factor: 1; --total-scale-factor: 1; --user-unit: 1; --scale-round-x: 1px; --scale-round-y: 1px; }   /* PDF.js's text layer sizes itself from these */
+.pdf-page { position: relative; margin: 0 auto 12px; overflow: hidden; background: #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, .4), 0 3px 10px rgba(0, 0, 0, .45); }
+.pdf-page:last-child { margin-bottom: 0; }
+.pdf-page:empty::before { content: attr(data-n); position: absolute; inset: 0; display: grid; place-items: center; color: #d2d2d2; font: 600 clamp(1.4rem, 4vw, 2.4rem)/1 var(--sans); }
+.pdf-page > canvas { display: block; width: 100%; height: 100%; }
+
+/* the text over each page: invisible, but it can be selected, copied and found. The rules are PDF.js's own. */
+.pdf-text {
+  position: absolute; left: 0; top: 0; z-index: 1;
+  overflow: hidden; overflow: clip;
+  text-align: initial; line-height: 1; letter-spacing: normal; word-spacing: normal;
+  -webkit-text-size-adjust: none; text-size-adjust: none; forced-color-adjust: none;
+  transform-origin: 0 0;
+  --min-font-size: 1;
+  --text-scale-factor: calc(var(--total-scale-factor) * var(--min-font-size));
+  --min-font-size-inv: calc(1 / var(--min-font-size));
+}
+.pdf-text :is(span, br) { position: absolute; color: transparent; white-space: pre; cursor: text; transform-origin: 0 0; -webkit-user-select: text; user-select: text; }
+.pdf-text > :not(.markedContent),
+.pdf-text .markedContent span:not(.markedContent) {
+  z-index: 1;
+  --font-height: 0;
+  font-size: calc(var(--text-scale-factor) * var(--font-height));
+  --scale-x: 1;
+  --rotate: 0deg;
+  transform: rotate(var(--rotate)) scaleX(var(--scale-x)) scale(var(--min-font-size-inv));
+}
+.pdf-text .markedContent { display: contents; }
+.pdf-text ::selection { background: rgba(27, 82, 184, .35); color: transparent; }
+.pdf-text br::selection { background: transparent; }
+.pdf-text .endOfContent { display: block; position: absolute; inset: 100% 0 0; z-index: 0; cursor: default; -webkit-user-select: none; user-select: none; }
+.pdf-text.selecting .endOfContent { top: 0; }
+
+/* the links in the PDF (web addresses and jumps inside it), placed over the words they cover */
+.pdf-links { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+.pdf-links > * { position: absolute; display: block; margin: 0; padding: 0; background: none; border: 0; border-radius: 2px; pointer-events: auto; cursor: pointer; text-decoration: none; }
+.pdf-links > :hover, .pdf-links > :focus-visible { background: rgba(27, 82, 184, .12); outline: 1px solid rgba(27, 82, 184, .6); outline-offset: 0; }
+
+/* "Loading…", "Preparing…" and error messages over the pages */
+.pdf-status {
+  position: absolute; inset: 0; z-index: 4;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .9rem;
+  padding: 2rem; text-align: center; pointer-events: none;
+  color: #e6e6e6; font: 500 1rem/1.5 var(--sans);
+}
+.pdf-status[hidden] { display: none; }
+.pdf-status.is-error { pointer-events: auto; }
+.pdf-msg, .pdf-alt { margin: 0; max-width: 28rem; }
+.pdf-alt { color: #cfcfcf; font-size: .92rem; }
+.pdf-alt a { color: #cfe0ff; }
+.pdf-alt[hidden], .pdf-prog[hidden] { display: none; }
+.pdf-prog { width: min(16rem, 70%); height: 4px; overflow: hidden; background: rgba(255, 255, 255, .2); border-radius: 2px; }
+.pdf-prog i { display: block; width: 0; height: 100%; background: #fff; border-radius: 2px; transition: width .15s linear; }
+.pdf-prog.ind i { width: 35%; animation: pdf-slide 1.1s ease-in-out infinite alternate; }
+@keyframes pdf-slide { from { transform: translateX(0); } to { transform: translateX(185%); } }
+@media (prefers-reduced-motion: reduce) {
+  .pdf-prog i, .pdf-tg svg { transition: none; }
+  .pdf-prog.ind i { animation: none; width: 100%; opacity: .5; }
+}
+
+/* when the PDF cannot be shown, the controls that cannot work are left out (the whole bar, if the file never arrived) */
+.pdf-viewer.is-failed .pb:disabled, .pdf-viewer.is-failed .pb-page, .pdf-viewer.is-failed .pb-sep, .pdf-viewer.is-failed .pb-zoom { display: none; }
+.pdf-viewer.no-file .pdf-bar { display: none; }
+.pdf-viewer.is-failed { height: 18rem; min-height: 0; }                     /* a short panel for the message, not a screenful of dark grey */
+
+/* the browser's own PDF reader, used only when PDF.js could not be loaded */
+.pdf-native { display: block; flex: 1; width: 100%; min-height: 0; border: 0; background: #fff; }
+
+/* ---------- narrower screens ---------- */
+@media (max-width: 860px) {
+  .doc .art-head { padding-bottom: 20px; }
+  .doc-file { padding-top: 1.3rem; }
+  .doc-in { margin-top: 1.8rem; padding-top: 1.3rem; }
+}
+@media (max-width: 640px) {
+  .pdf-file { flex-wrap: wrap; row-gap: 12px; }
+  .pdf-name { flex: 1 1 0; }
+  .pdf-dl { flex: 1 1 100%; }
+
+  .pdf-viewer { height: 78vh; min-height: min(380px, 94vh); }
+  @supports (height: 100dvh) { .pdf-viewer { height: 78dvh; min-height: min(380px, 94dvh); } }
+  .pdf-bar { min-height: 48px; padding: 0 4px; gap: 0; }
+  .pb-page { margin: 0 .2rem; }
+  .pb-sep { margin: 0 .3rem; }
+  .pb-zoom, .pb[data-act="rot"], .pb[data-act="open"], .pb[data-act="full"] { display: none; }   /* fewer buttons on a phone */
+  .pdf-side { position: absolute; z-index: 5; top: 0; bottom: 0; left: 0; width: min(18rem, 86%); box-shadow: 6px 0 20px rgba(0, 0, 0, .55); }   /* covers the pages instead of squeezing them */
+  .pdf-stage { padding: 10px; }
+}
+@media (max-width: 400px) {                                          /* small phones: a tighter page box, so that even "of 120" fits next to the buttons */
+  .pdf-bar { padding: 0 2px; }
+  .pb-page { gap: .3rem; margin: 0 .35rem; font-size: .95rem; }
+  .pb-num { width: 2.9em; }
+}
+@media (max-width: 360px) { .pb-sep { display: none; } }
+@media (max-width: 340px) { .pb { width: 36px; } .pb-page { margin: 0 .2rem; } }
+
+/* ---------- printing: the viewer does not print ---------- */
+@media print {
+  .pdf-viewer, .pdf-dl { display: none !important; }
+  .pdf-file { padding: 0; border: 0; }
+}
