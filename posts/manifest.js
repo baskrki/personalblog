@@ -5,9 +5,6 @@
    just easier to read. Names must match the files in this folder exactly. */
 
 Lemmata.manifest = [
-  "2026-10-18-cyclic-subgroups-of-fields.js",
-  "2026-10-12-basel-via-parseval.js",
-  "2026-10-05-cauchy-schwarz-discriminant.js",
   "2026-06-07-abstraction.js",
   "2026-06-05-fairness.js",
   "2026-04-23-rethinking.js",
