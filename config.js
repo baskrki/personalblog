@@ -48,7 +48,7 @@ Lemmata.math = [
     type:  "Problem Set",
     text:  `Problem sets based on MIT OpenCourseWare 18.100B (Real Analysis, Spring 2025). Original problems © MIT OCW; solutions written by me. Shared under the <strong>CC BY-NC-SA 4.0</strong> license. I’m still working on problem sets 9 and 10. Visit my GitHub for source files and proper licensing.`,
     links: [
-      ["View PDF",    "https://github.com/baskrki/Notes/raw/main/realanalysis/realanalysis.pdf"],
+      ["View PDF",    "https://baskrki.github.io/Notes/realanalysis/realanalysis.pdf"],
       ["View GitHub", "https://github.com/baskrki/Notes/blob/main/realanalysis"]
     ]
   },
@@ -58,7 +58,7 @@ Lemmata.math = [
     type:  "Notes",
     text:  `Personal notes based on Sheldon Axler’s <em>Linear Algebra Done Right</em>, written in my own words, with selected problem solutions.`,
     links: [
-      ["View PDF",    "https://github.com/baskrki/Notes/raw/main/linearalgebra/linalgebra.pdf"],
+      ["View PDF",    "https://baskrki.github.io/Notes/linearalgebra/linalgebra.pdf"],
       ["View GitHub", "https://github.com/baskrki/Notes/tree/main/linearalgebra"]
     ]
   },
@@ -68,7 +68,7 @@ Lemmata.math = [
     type:  "Notes",
     text:  `Abstract algebra notes written independently while studying standard textbooks. Includes original explanations and selected problem solutions.`,
     links: [
-      ["View PDF",    "https://github.com/baskrki/Notes/raw/main/grouptheory/grouptheory.pdf"],
+      ["View PDF",    "https://baskrki.github.io/Notes/grouptheory/grouptheory.pdf"],
       ["View GitHub", "https://github.com/baskrki/Notes/tree/main/grouptheory"]
     ]
   }
