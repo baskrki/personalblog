@@ -5,7 +5,7 @@ Lemmata.site = {
   title:   "Lemmata",
   tagline: "Expository notes, worked problems, personal thoughts and many more.",
   author:  "Basu Dev Karki",
-  email:   "",    // optional, like "you@example.com"; adds a Contact line to the About page
+  email:   "basukb234@gmail.com",    // optional, like "you@example.com"; adds a Contact line to the About page
   farewell: "Have a great day!"   // optional: a last line at the foot of every page
 };
 
