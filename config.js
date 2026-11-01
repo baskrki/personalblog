@@ -30,8 +30,7 @@ Lemmata.links = [
 // ${Lemmata.site.author} is replaced by the author name above; no other backticks inside, please.
 Lemmata.about = `
 <p>I am ${Lemmata.site.author}, an undergraduate student of mathematics. This blog collects expository notes, worked problems and my personal
-thoughts many different topics.</p>
-<p>Everything is typeset in LaTeX and rendered with MathJax. Errors are likely in notes of this kind; corrections are welcome.</p>`;
+thoughts many different topics.</p>`;
 
 // the Math page: notes and problem sets that live as PDFs (here, on GitHub).
 // Every entry is { id, title, type, text, links }:
