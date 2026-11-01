@@ -10,7 +10,7 @@ Lemmata.site = {
 };
 
 // How many notes the home page lists before the "Browse all" link to the archive.
-Lemmata.recentCount = 6;
+Lemmata.recentCount = 2;
 
 // How lists of notes look (home, topics, months, search):
 //   "list" - each note is a title with a short excerpt; click through to read it (default)
